@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+
+    //1. 在js中如何实现一个类
+//     function Person(){  //普通函数
+//         this.name = "jack";
+//         this.age = 100;
+
+//         this.run = function(){
+//             alert("hello word")
+//         }
+//     }
+
+//     //实例化的对象
+//    let p =  new Person()
+
+//    console.log(p.name)
+//    console.log(p.age)
+//    p.run()
+
+
+    //2. 私有属性和方法   公有属性和方法
+//     function Person(){
+//         this.leaver = 5;
+//         this.name = "John";
+//     }
+
+//     Person.prototype.name = "hello";
+//     Person.prototype.age = 100;
+//     Person.prototype.run = function(){
+//         alert(this.name + this.age)
+//     }
+
+
+
+//     let p = new Person();
+//     console.log(p.leaver)
+//     console.log(p.name)
+//     console.log(p.name)
+//    console.log(p.age)
+//    p.run()
+
+
+    //3. 静态方法的定义
+
+    // function Person(){
+    //     this.name = "John"
+    // }
+
+    // //静态方法
+    // Person.age = "hello";
+    // Person.run = function(){
+    //     alert(this.name)
+    // }
+
+    // //调用静态用法
+    // console.log(Person.age)
+    // Person.run()
+
+
+    // let p = new Person();
+
+
+    // console.log(p.name)
+
+
+    //4. 在js中实现继承 -- 对象冒充的继承方式   --  存在问题的  --    无法继承原型上的属性和方法
+    
+
+    // function Parent(){
+    //     this.hourse = "恒大房子";
+    //     this.car = "大众cc";
+    
+    //     this.message = function(){
+    //         alert("你的找到媳妇")
+    //     }
+
+    // }
+
+    // Parent.prototype.sex = "男";
+    // Parent.prototype.work = function(){
+    //     alert("我是做it的")
+    // }
+
+    // let p = new Parent();
+
+
+
+    
+    // // call apply bind  有什么区别?     
+
+    // function Child(){
+    //     Parent.call(this)
+    // }
+
+    // let c = new Child();
+
+    // console.log(c.name);
+    // c.work()
+
+    // console.log(c.hourse);
+    // console.log(c.car);
+    // c.message()
+
+
+    //5 . 原型链继承  -- 存在的问题 -- 实例化子类的时候没法给父类传参
+
+    // function Parent(){
+    //     this.name = "jack";
+    //     this.age = 100;
+
+    //     this.message = function(){
+    //         alert("hello wrold")
+    //     }
+    // }
+
+    // Parent.prototype.sex = "男"
+    // Parent.prototype.getUserInfo = function(){
+    //     alert(this.name + this.age + this.sex)
+    // }
+
+    // let p = new Parent()
+
+    // function Child(){
+    //     Parent.call(this)
+    // }
+
+    // Child.prototype = p
+
+    // let c = new Child();
+
+    // console.log(c.name)
+    // console.log(c.age)
+    // c.message();
+
+
+    // console.log(c.sex);
+    // c.getUserInfo();
+
+
+
+    // function Parent(name,age){
+    //     this.name = name;
+    //     this.age = age;
+
+    //     this.message = function(){
+    //         alert("hello wrold")
+    //     }
+    // }
+
+    // Parent.prototype.sex = "男"
+    // Parent.prototype.getUserInfo = function(){
+    //     alert(this.name + this.age + this.sex)
+    // }
+
+    // // let p = new Parent()
+
+    
+    // function Child(name,age){
+
+    // }
+
+    // Child.prototype = new Parent()
+
+    // let c = new Child("lisi",100)
+
+    // console.log(c.name)
+    // console.log(c.age)
+
+    //6. 原型链 + 对象冒充的 组合继承模式
+
+    // function Parent(name,age){
+
+    //     this.name = name;
+    //     this.age = age;
+
+    //     this.geInfo = function(){
+    //         alert("我的姓名是:" + this.name + "我的年龄是:" + this.age)
+    //     }
+
+    // }
+
+    // function Child(name,age){
+    //     Parent.call(this,name,age)
+    // }
+
+    // Child.prototype = new Parent();
+
+
+    // let c = new Child("里斯",100);
+
+    // console.log(c.name);
+    // console.log(c.age)
+
+
+    // function Parent(name,age){
+
+    //     this.name = name;
+    //     this.age = age;
+
+    //     this.geInfo = function(){
+    //         alert("我的姓名是:" + this.name + "我的年龄是:" + this.age)
+    //     }
+
+    // }
+
+    // function Child(name,age){
+    //     Parent.call(this,name,age)
+    // }
+
+    // Child.prototype = Parent.prototype;
+
+
+    // let c = new Child("里斯",100);
+
+    // console.log(c.name);
+    // console.log(c.age)
+
+
+    /*
+
+        继承的方式: 6种
+
+        1. 对象冒充继承 ---    无法继承父类原型上的属性和方法    --- 解决方案: 原型继承
+
+        2. 原型链继承  ---    实例化子类时无法给父类传参    --- 解决方案: 原型链 + 对象冒充的组成继承方式
+
+        3. 原型链 + 对象冒充的组合继承
+
+        4. 原型链 + 对象冒充的组合继承的另外一种方式
+
+
+        改变函数内this的指向: call apply bind      这几个方式和区别 以及他的用法
+
+
+        1. 掌握另外三种继承的方式 以及 优缺点
+        2. 掌握 call apply bind  这三个方法的使用与区别
+    
+    
+    */
+
+
+    // 继承: 子类调用父类属性和方法,并且可以给父类传递参数
+
+    //axios请求封装
+    // function Http(url,method){
+    //     this.request = function(){
+    //         return axios({
+    //             url  : url,
+    //             method : method,
+    //         })
+    //     }
+    // }
+    // let http = new Http();
+
+
+    // 5个功能   -- 调用一个方法   5 
+    //api接口封装
+    // function IndexApi(){
+
+    //     // 轮播图
+    //     this.getBanner = function(){
+    //         return this.request("https://www.baidu.com/api/banner")
+    //     }
+
+    //     // 分类
+    //     this.getCategory = function(){
+    //         return this.request("https://www.baidu.com/api/category")
+    //     }
+
+    //     // 列表
+    //     this.getList = function(){
+    //         return this.request("https://www.baidu.com/api/list")
+    //     }
+
+    // }
+
+    // IndexApi.prototype = Http.prototype;
+
+    // let indexApi = new IndexApi();
+
+    // indexApi.getBanner().then(response=>{
+    //     console.log(response)
+    // })
+    // indexApi.getCategory()
+    // indexApi.getList()
+
+    // localStorage.getItem()
+    // localStorage.setItem(localStorage)
+    // localStorage.removeItem(localStorage)
+    // localStorage.clear()
+
+    
+    // function Storage(key,value){
+    //     //获取本地存储的数据
+    //     this.get = function(){
+    //         return localStorage.getItem(key);
+    //     }
+
+    //     //设置本地存储的数据
+    //     this.set = function(){
+    //         localStorage.setItem(key,JSON.stringify(value))
+    //     };
+
+    //     //删除本地存储的数据
+    //     this.removeItem = function(){
+    //         localStorage.removeItem(key)
+    //     }
+
+    //     //清空本地存储的数据
+    //     this.clear = function(){
+    //         localStorage.clear();
+    //     }
+    // }
+
+    // let s = new Storage();
+
+
+    // a 页面 获取本地的数据
+
+    // function Load(){
+    //     //加载本地数据
+    //     this.loadData = function(){
+    //         return this.get("token")
+    //     }
+    // }
+
+    // Load.prototype = Storage.prototype
+
+    // let l = new Load();
+
+    // console.log(l.loadData)
+
+    // b 页面 设置本地的数据
+
+
+    // c 页面 获取本地的数据
+    
+    // d 页面 设置本地的数据
+
+
+
+
+</script>
