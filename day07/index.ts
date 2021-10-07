@@ -147,22 +147,22 @@
 //       radius : 123
 //   }
 
-interface Info{
-    () : void;
-    count : number;
-}
+// interface Info{
+//     () : void;
+//     count : number;
+// }
 
-const getCount = () : Info =>{
-    const c = ()=>{
-        c.count++;
+// const getCount = () : Info =>{
+//     const c = ()=>{
+//         c.count++;
 
-        console.log(c.count)
-    }
-    c.count = 0;
+//         console.log(c.count)
+//     }
+//     c.count = 0;
 
-    return c;
-}
+//     return c;
+// }
 
-let count : Info= getCount()
+// let count : Info= getCount()
 
-console.log(count())
+// console.log(count())
