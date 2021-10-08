@@ -161,3 +161,9 @@
 
 // let app = new App();
 // console.log(app.type)
+// ``
+// function test(){
+//     // arguments
+//     // let htmlCollection : HTMLCollection = document.getElementById("box")
+// }  
+
