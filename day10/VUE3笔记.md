@@ -218,13 +218,89 @@ declare module '*.vue' {
 
 declare module '*.vue'是一个全局类型声明写法，就是将模块名称“*.vue”引入了全局空间，即告诉 TypeScript 编译器，存在一个叫”*.vue”的模块，这样在其它组件里就可以使用import导入.vue文件了。
 
-### 4.3 什么是Composition API?
+## 五、Composition API
+
+### 5.1 什么是Composition API?
 
 Composition API是一组低侵入式的、函数式的 API，它使我们能够更灵活地“组合”组件的逻辑。Composition API 的灵感来自于React Hooks ，比 mixin 更强大。它可以提高代码逻辑的可复用性，从而实现与模板的无关性，同时函数式的编程使代码的可压缩性更强。另外Vue3的响应式模块可以与其他框架相组合。
 
 Composition API与Vue2的Options API的逻辑对比：
 
-![image-20211011101639047](VUE3笔记.assets/image-20211011101639047.png)
+![image-20211011101639047](VUE3笔记.assets/image-20211011101639047.png)可以看出在较大组件的编写中， Composition-API可以把复杂组件的逻辑抽地更紧凑，而且可以将公共逻辑进行抽取
 
-可以看出在较大组件的编写中， Composition-API可以把复杂组件的逻辑抽地更紧凑，而且可以将公共逻辑进行抽取
+### 5.1 setup函数
 
+在学习Composition-Api之前，需要先了解一下setup()函数。setup()是Vue3中的新增内容。它为基于Composition API的新特性提供了统一的入口，在Vue3中，所有的组合API函数都在此使用，只在初始化时执行一次，setup()函数会在created()生命周期之前执行，如果在setup()函数内返回对象，对象中的属性或方法，在<template>模板中可以直接使用。
+
+> 但是在setup当中我们无法访问this. 
+>
+> setup()函数会在created()生命周期之前执行
+
+#### 5.1.1 测试setup函数的执行顺序
+
+- 测试代码
+
+```
+export default defineComponent({
+  beforeCreate() {
+    console.log("----beforeCreate----");
+  },
+  created() {
+    console.log("----created----");
+  },
+  setup() {
+    console.log("----setup----");
+  },
+});
+
+```
+
+- 结果: 
+
+![image-20211011143117842](VUE3笔记.assets/image-20211011143117842.png)
+
+#### 5.1.2 setup函数参数
+
+使用`setup`时，它接受两个参数：
+
+1. props: 组件传入的属性
+
+   - setup 中接受的`props`是响应式的， 当传入新的 props 时，会及时被更新。由于是响应式的， 所以**不可以使用 ES6 解构**，解构会消除它的响应式。 **错误代码示例**， 这段代码会让 props 不再支持响应式：
+
+     ```
+     // demo.vue
+     export default defineComponent ({
+         setup(props, context) {
+             const { name } = props
+             console.log(name)
+         },
+     })
+     
+     ```
+
+   - 那在开发中我们**想要使用解构，还能保持`props`的响应式**，有没有办法解决呢？大家可以思考一下，在后面`toRefs`学习的地方为大家解答。 接下来我们来说一下`setup`接受的第二个参数`context`，我们前面说了`setup`中不能访问 Vue2 中最常用的`this`对象，所以`context`中就提供了`this`中最常用的三个属性：`attrs`、`slot` 和`emit`，分别对应 Vue2.x 中的 `$attr`属性、`slot`插槽 和`$emit`发射事件。并且这几个属性都是自动同步最新的值，所以我们每次使用拿到的都是最新值。
+
+2. context
+
+   - 传递给 `setup` 函数的第二个参数是 `context`。`context` 是一个普通 JavaScript 对象，暴露了其它可能在 `setup` 中有用的值：
+
+### 5.2 ref函数
+
+ref()函数可以将数据转化为响应式数据，一般用来定义一个基本类型的响应式数据。
+
+> 注意: ref也可以定义引用数据类型,让引用数据类型具有响应式的特性
+
+- ref操作数据
+
+  ```
+  let str = ref("hello world")
+  str.value = "123"
+  ```
+
+### 5.3 reactive函数
+
+reactive()的用法与ref()的用法相似，也是将数据变成响应式数据，当数据发生变化时模板视图也会自动更新。不同的是ref()用于基本数据类型，而reactive()是用于引用类型的数据，比如对象和数组。
+
+### 5.4 toRefs函数
+
+toRefs可以将响应式对象中所有属性包装为ref对象，并返回包含这些ref对象的普通对象，比如在setup函数中返回一个使用扩展运算符对象类型的响应式数据，这时这个对象类型的属性不再是响应式的，可以使用toRefs将对象中的每个属性都转换成响应式的。
