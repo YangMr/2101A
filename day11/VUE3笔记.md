@@ -426,3 +426,10 @@ export default defineComponent({
 </script>
 ```
 
+### 5.7 获取DOM与nextTick
+
+### 5.8 watch与watchEffect
+
+### 5.9 自定义hook
+
+### 5.10 shallowReactive与shallowRef

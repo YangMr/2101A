@@ -10,13 +10,38 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/lifecycle',
-    name: '/lifecycle',
+    name: 'lifecycle',
     component: () => import('../views/LifeCycle.vue'),
   },
   {
     path: '/computed',
-    name: '/computed',
+    name: 'computed',
     component: () => import('../views/Computed.vue'),
+  },
+  {
+    path: '/dom',
+    name: 'dom',
+    component: () => import('../views/Dom.vue'),
+  },
+  {
+    path: '/watch',
+    name: 'watch',
+    component: () => import('../views/Watch.vue'),
+  },
+  {
+    path: '/hook',
+    name: 'hook',
+    component: () => import('../views/Hook.vue'),
+  },
+  {
+    path: '/mixin',
+    name: 'mixin',
+    component: () => import('../views/Mixin.vue'),
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../views/Test.vue'),
   }
 ];
 

@@ -3,6 +3,11 @@
      <ul>
        <li @click="toPage('/lifecycle')">Vue3生命周期</li>
        <li @click="toPage('/computed')">Vue3计算属性</li>
+       <li @click="toPage('/dom')">Vue3获取dom</li>
+       <li @click="toPage('/watch')">Vue3中watch与watchEffect</li>
+       <li @click="toPage('/hook')">Vue3中hook的使用</li>
+       <li @click="toPage('/mixin')">Vue2中的混入</li>
+       <li @click="toPage('/test')">test</li>
      </ul>
   </div>
 </template>
@@ -23,7 +28,7 @@ export default defineComponent({
        path : path
      })
    }
-
+ 
    return {
       toPage
     }
