@@ -13,6 +13,106 @@
     </noscript>
     <div id="app"></div>
 
+    <!-- <div id="box">0</div>
+    <button id="btn">抢购</button>
+
+    <input type="text" id="ipt"> -->
+
     <!-- built files will be auto injected -->
   </body>
 </html>
+<script>
+  // btn.onclick = function(){
+  //   box.innerHTML = parseInt(box.innerHTML) + 1;
+  // }
+
+
+  /*
+    
+    核心思路: 在规定时间内只执行一次 大白话的理解: n秒内执行1次
+
+  
+  */
+
+//  function throttle(callback,wait){
+   
+//     let lastTime = 0;
+
+//     return function(){
+
+//       let nowTime = new Date().getTime();
+
+//       if(nowTime - lastTime > wait){
+//         callback()
+ 
+//         lastTime = nowTime;
+//       }
+
+//     }
+
+//  }
+
+//  function buy(){
+//   box.innerHTML = parseInt(box.innerHTML) + 1;
+//  }
+ 
+//  btn.onclick = throttle(buy,500)
+
+// function throttle(callback,wait){
+//   let lastTime = 0;
+//   return function(){
+//     let nowTime = new Date().getTime();
+//     if(nowTime - lastTime > wait){
+//       callback()
+//       lastTime = nowTime;
+//     }
+//   }
+// }
+
+// function buy(){
+//   box.innerHTML = parseInt(box.innerHTML) + 1;
+// }
+ 
+
+// btn.onclick = throttle(buy,1000)
+
+// btn.onclick = function(){}
+
+// 在n秒内执行一次, 用当前- 上一次   不用延迟   n秒内
+
+// 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。 n秒后在执行
+// 1000   
+
+// let ipt = document.getElementById("ipt");
+
+// function ajax(e){
+//   // console.log(e.target.value)
+//   console.log("123")
+// }
+
+//
+// function debounce(callback,delay){
+//   let timer = null;
+//     return function(){
+//       clearTimeout(timer)
+//        timer = setTimeout(()=>{
+//           callback.apply(this, arguments)
+//         },delay)
+//     }
+// }
+
+// function debounce(callback, delay){
+//     let timer = null;
+//     return function(){
+//       clearTimeout(timer)
+//       timer = setTimeout(()=>{
+//         callback()
+//       },delay)
+//     }
+// }
+
+// ipt.oninput = debounce(ajax,1000)
+
+
+
+</script>

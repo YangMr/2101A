@@ -67,6 +67,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue'),
+  },
+  {
+    path: '/custom',
+    name: 'custom',
+    component: () => import('../views/Custom.vue'),
+  },
+  {
+    path: '/define',
+    name: 'define',
+    component: () => import('../views/Define.vue'),
   }
 ];
 

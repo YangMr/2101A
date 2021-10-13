@@ -13,6 +13,8 @@
        <li @click="toPage('/raw')">toRaw与markRaw</li>
        <li @click="toPage('/toref')">toRef</li>
        <li @click="toPage('/login')">使用vue3语法实现登录页面</li>
+       <li @click="toPage('/custom')">customRef在实战中的使用</li>
+       <li @click="toPage('/define')">响应书数据判断</li>
      </ul>
   </div>
 </template>
