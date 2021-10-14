@@ -459,3 +459,220 @@ export default defineComponent({
 ### 5.21 使用Element Plus UI库
 
 ## 六、项目实战
+
+### 6.1 项目概述: 
+
+#### 6.1.1 项目名称
+
+**积云舆情监控后台管理系统**
+
+#### 6.1.2项目介绍:
+
+​		**积云舆情监控系统集成了舆情报告、正面舆情、负面舆情, 以及舆情关键词设置、舆情报警设置,舆情关键词分布等核心模块。帮助客户全面掌握舆情动态，正确进行舆论引导。为确保我国互联网络大众媒体的舆论导向的正确性起到一定的辅助作用，实现为政府分忧，对网络舆情进行监控和管理**
+
+#### 6.1.3 项目使用技术: 
+
+`vue3 + typescript + ant-design +axios + vue-router + vuex +  highcharts`
+
+### 6.2 项目环境搭建
+
+#### 6.2.1 使用vue-cli创建项目
+
+```
+vue create public-system
+```
+
+#### 6.2.2 配置项目(vue.config.js)
+
+- 关闭eslint
+
+- 配置自动打开浏览器
+
+- 配置启动的端口号
+
+  ```typescript
+  module.exports = {
+      //配置服务器
+      devServer : {
+          //配置端口号
+          port : 8888,
+          //配置项目启动自动打开浏览器
+          open : true,
+          //配置主机名
+          host : "localhost",
+          //配置https
+          https : false
+      },  
+      //关闭eslint
+      lintOnSave : false
+  }
+  ```
+
+- 项目中集成axios和ant design
+
+  - 安装axios
+
+  ```
+  npm i axios --save
+  ```
+
+  - 安装ant design  (教程地址:https://www.cnblogs.com/czly/p/14527197.html)
+
+  ```typescript
+  //1. 安装ant-design-vue
+  npm i --save ant-design-vue@next
+  
+  //2. 在main.ts中引入并注册
+  import { createApp } from 'vue';
+  import App from './App.vue';
+  import router from './router';
+  import store from './store';
+  import Antd from 'ant-design-vue';
+  import 'ant-design-vue/dist/antd.css';
+  createApp(App).use(store).use(router).use(Antd).mount('#app')
+  ```
+
+- 在`vue.config.js`中修改index.html文件的标题
+
+  ```javascript
+  module.exports = {
+      //配置服务器
+      devServer : {
+          //配置端口号
+          port : 8888,
+          //配置项目启动自动打开浏览器
+          open : true,
+          //配置主机名
+          host : "localhost",
+          //配置https
+          https : false
+      },  
+      //修改html文件配置
+      chainWebpack : config => {
+          config.plugin("html").tap(args=>{
+              args[0].title = "积云舆情监控后台管理系统";
+              return args;
+          })
+      },
+      //关闭eslint
+      lintOnSave : false
+  }
+  ```
+
+- 配置跨域
+
+  `vue.config.js`
+
+  ```javascript
+  module.exports = {
+      //配置服务器
+      devServer : {
+          //配置端口号
+          port : 8888,
+          //配置项目启动自动打开浏览器
+          open : true,
+          //配置主机名
+          host : "localhost",
+          //配置https
+          https : false,
+          //配置跨域
+          proxy : {
+             // /api为代理的名称
+             [process.env.VUE_APP_BASE_API] : {
+               target : process.env.VUE_APP_SERVICE_URL , //要跨域的地址
+               changeOrigin : true,  //开启跨域 
+               pathRewrite : {  //路径重写
+                   ["^" + process.env.VUE_APP_BASE_API] : ""
+               }
+             }
+          }
+      },  
+      //修改html文件配置
+      chainWebpack : config => {
+          config.plugin("html").tap(args=>{
+              args[0].title = "积云舆情监控后台管理系统";
+              return args;
+          })
+      },
+      //关闭eslint
+      lintOnSave : false
+  }
+  ```
+
+  `.env.development`
+
+  ```
+  # 代理名称
+  VUE_APP_BASE_API = "/dev-api"
+  
+  # 跨域的地址
+  VUE_APP_SERVICE_URL = "http://yuqing.itying.com/api"
+  ```
+
+  `.env.production`
+
+  ```
+  # 代理名称
+  VUE_APP_BASE_API = "/pro-api"
+  ```
+
+#### 6.2.3 axios二次封装
+
+1. 在src目录下创建utils文件夹
+2. 在utils文件夹内创建request.ts文件
+3. 在request.ts文件内引入axios以及类型
+4. 创建axios实例对象,在实例对象内配置请求的代理名称以及请求的超时时间
+5. 创建axios请求拦截器
+6. 创建axios响应拦截器
+7. 导出axios实例对象
+
+```typescript
+//1. 引入axios
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+
+//2. 创建axios实例
+let request = axios.create({
+  baseURL : process.env.VUE_APP_BASE_API,
+  timeout : 5000
+})
+
+//3. 创建请求拦截器
+request.interceptors.request.use((config: AxiosRequestConfig) => { 
+    return config 
+  },(error: AxiosError) => { 
+    return error 
+  }
+)
+
+//4. 创建响应拦截器
+request.interceptors.response.use((response : AxiosResponse) => {
+  return response;
+}, (error :AxiosError )=>{
+  return Promise.reject(error)
+});
+
+//5. 导出axios实例对象 request
+export default request
+
+
+```
+
+#### 6.2.4 api接口封装
+
+### 6.3 登录模块开发
+
+### 6.4 页面鉴权
+
+### 6.5 主页模块开发
+
+### 6.6 后台首页模块开发
+
+### 6.7 全部舆情模块开发
+
+### 6.8 舆情关键词设置模块开发
+
+### 6.9 舆情报警设置模块开发
+
+### 6.10 退出登录功能开发
+
+### 6.11 项目部署
