@@ -31,11 +31,18 @@
 import { defineComponent,onMounted,reactive,ref, toRefs } from 'vue'
 import {useThrottle} from "@/hook/useThrottle"
 import { message } from 'ant-design-vue';
+import {useRouter} from "vue-router"
+import {useStore} from "vuex"
 //引入userApi接口文件
 import userApi from "@/api/user"
 export default defineComponent({
   name: 'Login',
   setup(){
+      //获取路由对象
+      let router = useRouter()
+      //获取store对象
+      let store = useStore();
+
       //定义响应式变量来保存验证码图片(svgImg)以及svgKey
       let svgImg = ref("");
 
@@ -63,9 +70,17 @@ export default defineComponent({
           console.log("456")
           //调用登录接口
           userApi.doLogin(loginParams).then((response : any) =>{
-              console.log(response)
+
               if(response.data.success) {
+                //获取token  
+                let {token} = response.data.result
                 //使用vuex 和 本地存储
+                store.dispatch("setChangeToken",token)
+                store.dispatch("setChangeUserInfo",response.data.result)
+                //提示登录成功
+                message.success(response.data.message)
+                //跳转到主页
+                router.push({path : "/"})
               }else{
                    message.info(response.data.message);
               }
